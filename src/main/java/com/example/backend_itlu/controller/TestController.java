@@ -16,8 +16,10 @@ public class TestController {
 
     TestService testService;
 
+    
+
     @GetMapping
     void test() {
-        testService.test("Duan");
+        testService.test("Duanyeuthuong");
     }
 }
