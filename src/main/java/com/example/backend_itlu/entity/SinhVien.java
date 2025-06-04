@@ -1,9 +1,6 @@
 package com.example.backend_itlu.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -15,12 +12,19 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 
-public class Test {
+public class SinhVien {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
-    String name;
-    String email;
-    String passWord;
+    String id;
+    String maSinhVien;
+    String hoTen;
 
+    @OneToOne
+    @JoinColumn(name = "user_id", unique = true)
+    private User user;
+
+    @ManyToOne
+    @JoinColumn(name = "lop_id")
+    private Lop lop;
 }

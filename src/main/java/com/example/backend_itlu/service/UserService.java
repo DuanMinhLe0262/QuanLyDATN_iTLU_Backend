@@ -1,6 +1,6 @@
 package com.example.backend_itlu.service;
 
-import com.example.backend_itlu.repository.TestRepository;
+import com.example.backend_itlu.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -11,12 +11,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
-public class TestService {
+public class UserService {
 
-    TestRepository test;
-
-    public void test(String request) {
-
-        log.info("Hello world {}", request);
-    }
+    UserRepository userRepo;
 }
