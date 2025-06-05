@@ -31,7 +31,7 @@ public class SecurityConfig {
     @Value("${jwt.secretKey}")
     private String signerKey;
 
-    private final String [] PUBLIC_ENDPOINT = {"/auth/introspect", "/auth/token"};
+    private final String [] PUBLIC_ENDPOINT = {"/auth/introspect", "/auth/token", "/download"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
