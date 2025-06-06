@@ -1,8 +1,11 @@
 package com.example.backend_itlu.entity;
 
+import com.example.backend_itlu.enums.GioiTinh;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.time.LocalDate;
 
 @Entity
 @Getter
@@ -18,7 +21,15 @@ public class SinhVien {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
     String maSinhVien;
-    String hoTen;
+    String hoDem;
+    String ten;
+    LocalDate ngaySinh;
+
+    @Enumerated(EnumType.STRING)
+    @Column(name = "gioi_tinh")
+    GioiTinh gioiTinh;
+
+    String soDienThoai;
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)

@@ -16,9 +16,6 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.context.annotation.Bean;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.factory.PasswordEncoderFactories;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
@@ -105,7 +102,7 @@ public class AuthenticationService {
     private String buildScope(User user){
         StringJoiner stringJoiner = new StringJoiner(" ");
         if (!CollectionUtils.isEmpty(user.getRoles()))
-            user.getRoles().forEach(role -> stringJoiner.add(role.getName()));
+            user.getRoles().forEach(role -> stringJoiner.add(role.name()));
 
         return stringJoiner.toString();
 
