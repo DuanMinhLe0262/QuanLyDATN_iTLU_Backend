@@ -18,8 +18,9 @@ public class Nganh {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
     String tenNganh;
+    String moTa;
 
     @ManyToOne
     @JoinColumn(name = "bomon_id")
-    BoMon bomon;
+    BoMon boMon;
 }

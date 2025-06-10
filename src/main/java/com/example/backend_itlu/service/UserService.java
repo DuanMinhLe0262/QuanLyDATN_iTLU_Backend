@@ -5,6 +5,8 @@ import com.example.backend_itlu.dto.request.UserUpdateRequest;
 import com.example.backend_itlu.dto.response.UserResponse;
 import com.example.backend_itlu.entity.User;
 import com.example.backend_itlu.enums.Role;
+import com.example.backend_itlu.exception.AppException;
+import com.example.backend_itlu.exception.ErrorCode;
 import com.example.backend_itlu.mapper.UserMapper;
 import com.example.backend_itlu.repository.UserRepository;
 import lombok.AccessLevel;
@@ -30,28 +32,31 @@ public class UserService {
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
 
+
     public UserResponse createUser(UserCreationRequest request) {
-
-
-        User user = userMapper. toUser(request);
+        User user = userMapper.toUser(request);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
 
-        HashSet<Role> roles = new HashSet<>();
-        roles.addAll(user.getRoles());
+        HashSet<Role> roles = new HashSet<>(user.getRoles());
         user.setRoles(roles);
 
         return userMapper.toUserResponse(userRepo.save(user));
     }
 
+
     public UserResponse updateUser(String userId, UserUpdateRequest request) {
         User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND, "Không tìm thấy người dùng với ID: " + userId));
 
         userMapper.updateUserFromRequest(user, request);
         return userMapper.toUserResponse(userRepo.save(user));
     }
 
     public void deleteUser(String userId) {
+        boolean exists = userRepo.existsById(userId);
+        if (!exists) {
+            throw new AppException(ErrorCode.USER_NOT_FOUND, "Không thể xoá. Người dùng không tồn tại: " + userId);
+        }
         userRepo.deleteById(userId);
     }
 
@@ -59,23 +64,23 @@ public class UserService {
         var context = SecurityContextHolder.getContext();
         String email = context.getAuthentication().getName();
 
-        User user = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("User not found with name: " + email));
+        User user = userRepo.findByEmail(email)
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND, "Không tìm thấy người dùng với email: " + email));
+
         return userMapper.toUserResponse(user);
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+//    @PreAuthorize("hasRole('ADMIN')")
     public List<UserResponse> getAllUsers() {
-
-        log.info("In method getAllUsers");
         List<User> users = userRepo.findAll();
         return userMapper.toUserResponseList(users);
     }
 
-    @PostAuthorize("returnObject.username == authentication.name")
+//    @PostAuthorize("returnObject.username == authentication.name")
     public UserResponse getUserById(String userId) {
-
         User user = userRepo.findById(userId)
-                .orElseThrow(() -> new RuntimeException("User not found with ID: " + userId));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND, "Không tìm thấy người dùng với ID: " + userId));
+
         return userMapper.toUserResponse(user);
     }
 }

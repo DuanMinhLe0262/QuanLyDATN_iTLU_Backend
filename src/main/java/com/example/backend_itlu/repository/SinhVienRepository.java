@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SinhVienRepository extends JpaRepository<SinhVien, String> {
 
+    boolean existsByMaSinhVien(String maSinhVien);
 }

@@ -8,4 +8,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface KhoaRepository extends JpaRepository<Khoa, String> {
 
+    boolean existsByTenKhoa(String tenKhoa);
 }

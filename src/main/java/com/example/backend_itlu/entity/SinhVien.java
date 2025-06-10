@@ -29,6 +29,8 @@ public class SinhVien {
     @Column(name = "gioi_tinh")
     GioiTinh gioiTinh;
 
+    String diaChi;
+
     String soDienThoai;
 
     @OneToOne

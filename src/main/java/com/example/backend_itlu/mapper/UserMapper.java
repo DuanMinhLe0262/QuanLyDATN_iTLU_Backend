@@ -19,4 +19,6 @@ public interface UserMapper {
     List<UserResponse> toUserResponseList(List<User> userList);
 
     void updateUserFromRequest(@MappingTarget User user, UserUpdateRequest request);
+
+    User userIdToUser(String userId);
 }

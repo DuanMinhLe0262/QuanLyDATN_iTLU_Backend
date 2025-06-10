@@ -17,7 +17,7 @@ import java.util.List;
 
 @Slf4j
 @RestController
-@RequestMapping("/create-user")
+@RequestMapping("/user")
 @FieldDefaults(level = AccessLevel.PRIVATE, makeFinal = true)
 @RequiredArgsConstructor
 public class UserController {
@@ -33,11 +33,11 @@ public class UserController {
     @GetMapping
     ApiResponse<List<UserResponse>> getAllUsers() {
 
-        var authentication = SecurityContextHolder.getContext().getAuthentication();
-
-        log.info("Username: {}", authentication.getName());
-        authentication.getAuthorities().forEach(grantedAuthority
-                -> log.info("GrantedAuthority: {}", grantedAuthority));
+//        var authentication = SecurityContextHolder.getContext().getAuthentication();
+//
+//        log.info("Username: {}", authentication.getName());
+//        authentication.getAuthorities().forEach(grantedAuthority
+//                -> log.info("GrantedAuthority: {}", grantedAuthority));
 
         return ApiResponse.<List<UserResponse>>builder()
                 .result(userService.getAllUsers())

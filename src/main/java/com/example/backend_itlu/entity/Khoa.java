@@ -1,11 +1,10 @@
 package com.example.backend_itlu.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Entity
 @Getter
@@ -21,4 +20,10 @@ public class Khoa {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
     String tenKhoa;
+    String moTa;
+
+    @OneToMany(mappedBy = "khoa")
+    private List<BoMon> boMonList;
 }
+
+

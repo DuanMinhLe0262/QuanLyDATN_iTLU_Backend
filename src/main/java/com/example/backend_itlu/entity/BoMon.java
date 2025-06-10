@@ -18,6 +18,7 @@ public class BoMon {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
     String tenBoMon;
+    String moTa;
 
     @ManyToOne
     @JoinColumn(name = "khoa_id")

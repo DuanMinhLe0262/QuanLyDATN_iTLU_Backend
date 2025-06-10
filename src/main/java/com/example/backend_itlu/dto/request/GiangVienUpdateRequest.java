@@ -1,40 +1,30 @@
-package com.example.backend_itlu.entity;
+package com.example.backend_itlu.dto.request;
 
 import com.example.backend_itlu.enums.GioiTinh;
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 
-@Entity
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+public class GiangVienUpdateRequest {
 
-public class GiangVien {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    String id;
     String maGiangVien;
     String hoDem;
     String ten;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gioi_tinh")
     GioiTinh gioiTinh;
     LocalDate ngaySinh;
+
+    @Pattern(regexp = "^(\\+84|0)(3|5|7|8|9)[0-9]{8}$", message = "Số điện thoại không hợp lệ")
     String soDienThoai;
     String hocVi;
     String hocHam;
     String chucVu;
-    @ManyToOne
-    @JoinColumn(name = "bomon_id")
-    BoMon boMon;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    User user;
+    String boMonId;
 }
+

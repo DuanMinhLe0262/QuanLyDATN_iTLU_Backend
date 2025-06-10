@@ -31,7 +31,8 @@ public class SecurityConfig {
     @Value("${jwt.secretKey}")
     private String signerKey;
 
-    private final String [] PUBLIC_ENDPOINT = {"/auth/introspect", "/auth/token", "create-user"};
+    private final String [] PUBLIC_ENDPOINT = {"/auth/**", "/khoa/**", "/lop/**", "/nganh/**"
+            , "/bomon/**", "/sinhvien/**", "/giangvien/**", "/user/**"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -40,6 +41,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request ->
                 request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINT).permitAll()
+                        .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINT).permitAll()
+                        .requestMatchers(HttpMethod.PUT, PUBLIC_ENDPOINT).permitAll()
+                        .requestMatchers(HttpMethod.DELETE, PUBLIC_ENDPOINT).permitAll()
                         .anyRequest().authenticated());
 
         httpSecurity.oauth2ResourceServer(oauth2 ->
@@ -85,7 +89,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
+        configuration.setAllowedOrigins(List.of("http://localhost:5174"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

@@ -1,40 +1,30 @@
-package com.example.backend_itlu.entity;
+package com.example.backend_itlu.dto.response;
 
 import com.example.backend_itlu.enums.GioiTinh;
-import jakarta.persistence.*;
+import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
 
-@Entity
-@Getter
-@Setter
+@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+public class GiangVienResponse {
 
-public class GiangVien {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     String id;
     String maGiangVien;
     String hoDem;
     String ten;
-    @Enumerated(EnumType.STRING)
-    @Column(name = "gioi_tinh")
     GioiTinh gioiTinh;
     LocalDate ngaySinh;
     String soDienThoai;
     String hocVi;
     String hocHam;
     String chucVu;
-    @ManyToOne
-    @JoinColumn(name = "bomon_id")
-    BoMon boMon;
-
-    @OneToOne
-    @JoinColumn(name = "user_id")
-    User user;
+    String boMonId;
+    String userId;
 }
+
