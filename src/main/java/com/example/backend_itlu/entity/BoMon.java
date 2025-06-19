@@ -21,6 +21,6 @@ public class BoMon {
     String moTa;
 
     @ManyToOne
-    @JoinColumn(name = "boMon_id")
+    @JoinColumn(name = "khoa_id")
     Khoa khoa;
 }

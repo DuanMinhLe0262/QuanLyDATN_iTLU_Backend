@@ -18,5 +18,5 @@ public class DeTaiGoiYResponse {
     String mucTieu;
     String yeuCau;
     String linhVuc;
-    String boMonId;
+    BoMonResponse boMon;
 }

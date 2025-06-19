@@ -21,10 +21,11 @@ public class GiangVienResponse {
     GioiTinh gioiTinh;
     LocalDate ngaySinh;
     String soDienThoai;
+    String avatarUrl;
     String hocVi;
     String hocHam;
     String chucVu;
-    String boMonId;
-    String userId;
+    BoMonResponse boMon;
+    UserResponse user;
 }
 

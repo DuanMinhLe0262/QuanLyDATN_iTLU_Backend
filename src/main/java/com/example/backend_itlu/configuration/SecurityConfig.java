@@ -32,7 +32,7 @@ public class SecurityConfig {
     private String signerKey;
 
     private final String [] PUBLIC_ENDPOINT = {"/auth/**", "/khoa/**", "/lop/**", "/nganh/**"
-            , "/bomon/**", "/sinhvien/**", "/giangvien/**", "/user/**"};
+            , "/bomon/**", "/sinhvien/**", "/giangvien/**", "/user/**", "/dotdoan/**"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -89,7 +89,7 @@ public class SecurityConfig {
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of("http://localhost:5174"));
+        configuration.setAllowedOrigins(List.of("http://localhost:5173"));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
         configuration.setAllowCredentials(true);

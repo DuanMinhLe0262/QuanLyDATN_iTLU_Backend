@@ -34,6 +34,6 @@ public class DeTaiGoiY {
 
     @ManyToOne
     @JoinColumn(name = "bomon_id")
-    BoMon bomon;
+    BoMon boMon;
 
 }

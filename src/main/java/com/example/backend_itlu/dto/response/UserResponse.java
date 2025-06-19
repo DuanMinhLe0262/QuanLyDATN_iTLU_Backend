@@ -16,5 +16,4 @@ public class UserResponse {
     String id;
     String email;
     Set<Role> roles;
-
 }

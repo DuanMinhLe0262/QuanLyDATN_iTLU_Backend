@@ -13,5 +13,5 @@ public class NganhResponse {
     String id;
     String tenNganh;
     String moTa;
-    String boMonId;
+    BoMonResponse boMon;
 }

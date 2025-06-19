@@ -22,6 +22,7 @@ public class GiangVienUpdateRequest {
 
     @Pattern(regexp = "^(\\+84|0)(3|5|7|8|9)[0-9]{8}$", message = "Số điện thoại không hợp lệ")
     String soDienThoai;
+    String avatarUrl;
     String hocVi;
     String hocHam;
     String chucVu;

@@ -35,8 +35,10 @@ public class SinhVienResponse {
 
     String soDienThoai;
 
-    String userId;
+    String avatarUrl;
 
-    String lopId;
+    UserResponse user;
+
+    LopResponse lop;
 
 }

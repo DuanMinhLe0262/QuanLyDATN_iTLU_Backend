@@ -16,5 +16,5 @@ public class BoMonResponse {
     String id;
     String tenBoMon;
     String moTa;
-    String khoaId;
+    KhoaResponse khoa;
 }

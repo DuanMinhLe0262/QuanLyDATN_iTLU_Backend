@@ -27,6 +27,8 @@ public class GiangVien {
     GioiTinh gioiTinh;
     LocalDate ngaySinh;
     String soDienThoai;
+    @Column(name = "avatar_url")
+    String avatarUrl;
     String hocVi;
     String hocHam;
     String chucVu;

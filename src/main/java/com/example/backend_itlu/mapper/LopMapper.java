@@ -16,7 +16,7 @@ public interface LopMapper {
 
     Lop toLop(LopCreationRequest request);
 
-    @Mapping(source = "nganh.id", target = "nganhId")
+    @Mapping(source = "nganh", target = "nganh")
     LopResponse toLopResponse(Lop Lop);
 
     List<LopResponse> toLopResponseList(List<Lop> LopList);

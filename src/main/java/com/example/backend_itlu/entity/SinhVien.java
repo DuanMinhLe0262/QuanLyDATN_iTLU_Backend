@@ -33,6 +33,9 @@ public class SinhVien {
 
     String soDienThoai;
 
+    @Column(name = "avatar_url")
+    private String avatarUrl;
+
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
     private User user;

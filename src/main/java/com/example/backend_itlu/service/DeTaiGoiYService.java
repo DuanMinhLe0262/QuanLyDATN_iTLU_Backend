@@ -34,7 +34,7 @@ public class DeTaiGoiYService {
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
         DeTaiGoiY DeTaiGoiY = DeTaiGoiYMapper.toDeTaiGoiY(request);
-        DeTaiGoiY.setBomon(boMon);
+        DeTaiGoiY.setBoMon(boMon);
 
         return DeTaiGoiYMapper.toDeTaiGoiYResponse(DeTaiGoiYRepo.save(DeTaiGoiY));
     }

@@ -15,7 +15,7 @@ public interface BoMonMapper {
 
     BoMon toBoMon(BoMonCreationRequest request);
 
-    @Mapping(source = "khoa.id", target = "khoaId")
+    @Mapping(source = "khoa", target = "khoa")
     BoMonResponse toBoMonResponse(BoMon boMon);
 
     List<BoMonResponse> toBoMonResponseList(List<BoMon> boMonList);

@@ -15,8 +15,8 @@ public interface GiangVienMapper {
 
     GiangVien toGiangVien(GiangVienCreationRequest request);
 
-    @Mapping(source = "boMon.id", target = "boMonId" )
-    @Mapping(source = "user.id", target = "userId" )
+    @Mapping(source = "boMon", target = "boMon" )
+    @Mapping(source = "user", target = "user" )
     GiangVienResponse toGiangVienResponse(GiangVien giangVien);
 
     List<GiangVienResponse> toGiangVienResponseList(List<GiangVien> giangVienList);

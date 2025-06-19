@@ -12,5 +12,5 @@ public class LopResponse {
     String id;
     String tenLop;
     String khoaHoc;
-    String nganhId;
+    NganhResponse nganh;
 }

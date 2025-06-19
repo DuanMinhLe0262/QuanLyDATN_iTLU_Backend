@@ -15,7 +15,7 @@ public interface DeTaiGoiYMapper {
 
     DeTaiGoiY toDeTaiGoiY(DeTaiGoiYCreationRequest request);
 
-    @Mapping(source = "boMon.id", target = "boMonId")
+    @Mapping(source = "boMon", target = "boMon")
     DeTaiGoiYResponse toDeTaiGoiYResponse(DeTaiGoiY deTaiGoiY);
 
     List<DeTaiGoiYResponse> toDeTaiGoiYResponseList(List<DeTaiGoiY> deTaiGoiYList);
