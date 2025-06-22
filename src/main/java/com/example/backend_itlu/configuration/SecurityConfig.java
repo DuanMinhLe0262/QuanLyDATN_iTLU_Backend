@@ -1,5 +1,6 @@
 package com.example.backend_itlu.configuration;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
 import org.springframework.security.oauth2.server.resource.authentication.JwtAuthenticationConverter;
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -31,8 +33,10 @@ public class SecurityConfig {
     @Value("${jwt.secretKey}")
     private String signerKey;
 
-    private final String [] PUBLIC_ENDPOINT = {"/auth/**", "/khoa/**", "/lop/**", "/nganh/**"
-            , "/bomon/**", "/sinhvien/**", "/giangvien/**", "/user/**", "/dotdoan/**"};
+    @Autowired
+    private JwtCookieFilter jwtCookieFilter;
+
+    private final String [] PUBLIC_ENDPOINT = {"/auth/token","/auth/introspect","/user", "/user/**"};
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
@@ -41,10 +45,9 @@ public class SecurityConfig {
                 .cors(cors -> cors.configurationSource(corsConfigurationSource()))
                 .authorizeHttpRequests(request ->
                 request.requestMatchers(HttpMethod.POST, PUBLIC_ENDPOINT).permitAll()
-                        .requestMatchers(HttpMethod.GET, PUBLIC_ENDPOINT).permitAll()
-                        .requestMatchers(HttpMethod.PUT, PUBLIC_ENDPOINT).permitAll()
-                        .requestMatchers(HttpMethod.DELETE, PUBLIC_ENDPOINT).permitAll()
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated())
+                .addFilterBefore(jwtCookieFilter, UsernamePasswordAuthenticationFilter.class);
+
 
         httpSecurity.oauth2ResourceServer(oauth2 ->
                 oauth2.jwt(jwtConfigurer ->

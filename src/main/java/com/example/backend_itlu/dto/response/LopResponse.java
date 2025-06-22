@@ -11,6 +11,7 @@ import lombok.experimental.FieldDefaults;
 public class LopResponse {
     String id;
     String tenLop;
+    String moTa;
     String khoaHoc;
     NganhResponse nganh;
 }

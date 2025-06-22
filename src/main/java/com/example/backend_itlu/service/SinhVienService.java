@@ -6,6 +6,7 @@ import com.example.backend_itlu.dto.response.SinhVienResponse;
 import com.example.backend_itlu.entity.Lop;
 import com.example.backend_itlu.entity.SinhVien;
 import com.example.backend_itlu.entity.User;
+import com.example.backend_itlu.enums.Role;
 import com.example.backend_itlu.exception.AppException;
 import com.example.backend_itlu.exception.ErrorCode;
 import com.example.backend_itlu.mapper.SinhVienMapper;
@@ -16,9 +17,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -30,14 +33,23 @@ public class SinhVienService {
     SinhVienMapper sinhVienMapper;
     SinhVienRepository sinhVienRepo;
     UserRepository userRepository;
+    UserService userService;
+
+    private final PasswordEncoder passwordEncoder;
+
 
     public SinhVienResponse createSinhVien(SinhVienCreationRequest request) {
 
         Lop lop = lopRepository.findById(request.getLopId())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
-        User user = userRepository.findById(request.getUserId())
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        User user = User.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode("Tlu@12345"))
+                .roles(Set.of(Role.STUDENT))
+                .build();
+
+        user = userRepository.save(user);
 
         SinhVien sinhVien = sinhVienMapper.toSinhVien(request);
         sinhVien.setLop(lop);

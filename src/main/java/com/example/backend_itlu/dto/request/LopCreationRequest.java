@@ -10,6 +10,7 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LopCreationRequest {
     String tenLop;
+    String moTa;
     String khoaHoc;
     String nganhId;
 }

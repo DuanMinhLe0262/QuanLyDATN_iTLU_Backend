@@ -13,44 +13,47 @@ import java.util.Objects;
 @Service
 public class FileStorageService {
 
-
     private static final String STORAGE_DIRECTORY = "D:\\Backend_storage\\Storage";
 
-    public void saveFiles(MultipartFile[] filesToSave) throws IOException {
-
-        if(filesToSave == null || filesToSave.length == 0){
-            throw new IllegalArgumentException("fileToSave is null");
+    public String saveFile(MultipartFile fileToSave) throws IOException {
+        if (fileToSave == null || fileToSave.isEmpty()) {
+            throw new IllegalArgumentException("File is null or empty");
         }
 
-        for (MultipartFile fileToSave : filesToSave) {
-            saveFile(fileToSave);
+        // Đảm bảo thư mục tồn tại
+        File dir = new File(STORAGE_DIRECTORY);
+        if (!dir.exists()) {
+            dir.mkdirs();
         }
-    }
 
-    public void saveFile(MultipartFile fileToSave) throws IOException {
+        String fileName = fileToSave.getOriginalFilename();
+        File targetFile = new File(STORAGE_DIRECTORY + File.separator + fileName);
 
-        if(fileToSave == null){
-            throw new IllegalArgumentException("fileToSave is null");
-        }
-        var targetFile = new File(STORAGE_DIRECTORY + "/" + fileToSave.getOriginalFilename());
-        if(!Objects.equals(targetFile.getParent(), STORAGE_DIRECTORY)){
+        if (!Objects.equals(targetFile.getParentFile().getAbsolutePath(), dir.getAbsolutePath())) {
             throw new SecurityException("Unsupported filename!");
         }
-        Files.copy(fileToSave.getInputStream(),targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        Files.copy(fileToSave.getInputStream(), targetFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
+
+        // Trả về URL hoặc đường dẫn để lưu vào DB
+        return "/files/" + fileName;
     }
 
     public File getDownloadFile(String fileName) throws Exception {
-
-        if(fileName == null){
+        if (fileName == null || fileName.isBlank()) {
             throw new IllegalArgumentException("fileName is null");
         }
-        var fileToDownload = new File(STORAGE_DIRECTORY + "/" + File.separator + fileName);
-        if(!Objects.equals(fileToDownload.getParent(), STORAGE_DIRECTORY)){
-            throw new SecurityException("Unsupported filename!");
+
+        File fileToDownload = new File(STORAGE_DIRECTORY + File.separator + fileName);
+
+        if (!fileToDownload.getCanonicalFile().getParentFile().equals(new File(STORAGE_DIRECTORY).getCanonicalFile())) {
+            throw new SecurityException("Invalid file path");
         }
-        if(!fileToDownload.exists()){
-            throw new FileNotFoundException("No file named: " +  fileName);
+
+        if (!fileToDownload.exists()) {
+            throw new FileNotFoundException("No file named: " + fileName);
         }
+
         return fileToDownload;
     }
 }

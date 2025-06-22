@@ -7,6 +7,7 @@ import com.example.backend_itlu.dto.request.SinhVienUpdateRequest;
 import com.example.backend_itlu.dto.response.GiangVienResponse;
 import com.example.backend_itlu.dto.response.SinhVienResponse;
 import com.example.backend_itlu.entity.*;
+import com.example.backend_itlu.enums.Role;
 import com.example.backend_itlu.exception.AppException;
 import com.example.backend_itlu.exception.ErrorCode;
 import com.example.backend_itlu.mapper.GiangVienMapper;
@@ -16,9 +17,11 @@ import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Set;
 
 @Slf4j
 @Service
@@ -30,13 +33,19 @@ public class GiangVienService {
     UserRepository userRepo;
     GiangVienRepository giangVienRepo;
     GiangVienMapper giangVienMapper;
+    private final PasswordEncoder passwordEncoder;
 
     public GiangVienResponse createGiangVien(GiangVienCreationRequest request) {
         BoMon boMon = boMonRepo.findById(request.getBoMonId())
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
-        User user = userRepo.findById(request.getUserId())
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+        User user = User.builder()
+                .email(request.getEmail())
+                .password(passwordEncoder.encode("Tlu@12345"))
+                .roles(Set.of(Role.LECTURE))
+                .build();
+
+        user = userRepo.save(user);
 
         GiangVien giangVien = giangVienMapper.toGiangVien(request);
         giangVien.setBoMon(boMon);

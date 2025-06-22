@@ -64,7 +64,7 @@ public class AuthenticationService {
 
         boolean authenticated = passwordEncoder.matches(request.getPassword(), user.getPassword());
         if (!authenticated) {
-            log.error("Sai mat khau");
+            throw new RuntimeException("Sai mật khẩu");
         }
 
         var token = generateToken(user);

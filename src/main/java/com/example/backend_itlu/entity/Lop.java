@@ -18,6 +18,7 @@ public class Lop {
     @GeneratedValue(strategy = GenerationType.UUID)
     String id;
     String tenLop;
+    String moTa;
     String khoaHoc;
 
     @ManyToOne

@@ -34,13 +34,13 @@ public class SinhVien {
     String soDienThoai;
 
     @Column(name = "avatar_url")
-    private String avatarUrl;
+    String avatarUrl;
 
     @OneToOne
     @JoinColumn(name = "user_id", unique = true)
-    private User user;
+    User user;
 
     @ManyToOne
     @JoinColumn(name = "lop_id")
-    private Lop lop;
+    Lop lop;
 }

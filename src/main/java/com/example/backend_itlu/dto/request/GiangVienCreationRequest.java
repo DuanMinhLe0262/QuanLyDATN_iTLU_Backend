@@ -1,11 +1,6 @@
 package com.example.backend_itlu.dto.request;
 
-import com.example.backend_itlu.entity.BoMon;
-import com.example.backend_itlu.entity.User;
 import com.example.backend_itlu.enums.GioiTinh;
-import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
@@ -22,6 +17,7 @@ public class GiangVienCreationRequest {
     String maGiangVien;
     String hoDem;
     String ten;
+    String email;
     GioiTinh gioiTinh;
     LocalDate ngaySinh;
 

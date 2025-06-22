@@ -3,16 +3,23 @@ package com.example.backend_itlu.service;
 import com.example.backend_itlu.dto.request.UserCreationRequest;
 import com.example.backend_itlu.dto.request.UserUpdateRequest;
 import com.example.backend_itlu.dto.response.UserResponse;
+import com.example.backend_itlu.entity.GiangVien;
+import com.example.backend_itlu.entity.SinhVien;
 import com.example.backend_itlu.entity.User;
 import com.example.backend_itlu.enums.Role;
 import com.example.backend_itlu.exception.AppException;
 import com.example.backend_itlu.exception.ErrorCode;
+import com.example.backend_itlu.mapper.GiangVienMapper;
+import com.example.backend_itlu.mapper.SinhVienMapper;
 import com.example.backend_itlu.mapper.UserMapper;
+import com.example.backend_itlu.repository.GiangVienRepository;
+import com.example.backend_itlu.repository.SinhVienRepository;
 import com.example.backend_itlu.repository.UserRepository;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,6 +38,12 @@ public class UserService {
     UserRepository userRepo;
     UserMapper userMapper;
     PasswordEncoder passwordEncoder;
+
+    SinhVienRepository sinhVienRepo;
+    SinhVienMapper sinhVienMapper;
+    GiangVienMapper giangVienMapper;
+    GiangVienRepository giangVienRepo;
+
 
 
     public UserResponse createUser(UserCreationRequest request) {
@@ -60,14 +73,27 @@ public class UserService {
         userRepo.deleteById(userId);
     }
 
-    public UserResponse getMyInfo() {
-        var context = SecurityContextHolder.getContext();
-        String email = context.getAuthentication().getName();
+    public ResponseEntity<?> getMyInfo() {
+        String email = SecurityContextHolder.getContext().getAuthentication().getName();
 
         User user = userRepo.findByEmail(email)
-                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND, "Không tìm thấy người dùng với email: " + email));
+                .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
-        return userMapper.toUserResponse(user);
+        if (user.getRoles().contains(Role.STUDENT)) {
+            SinhVien sv = sinhVienRepo.findByUserId(user.getId())
+                    .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+
+            return ResponseEntity.ok(sinhVienMapper.toSinhVienResponse(sv));
+        }
+
+        if (user.getRoles().contains(Role.LECTURE)) {
+            GiangVien gv = giangVienRepo.findByUserId(user.getId())
+                    .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
+
+            return ResponseEntity.ok(giangVienMapper.toGiangVienResponse(gv));
+        }
+
+        throw new AppException(ErrorCode.UNAUTHORIZED_ACCESS, "Không xác định được vai trò người dùng");
     }
 
 //    @PreAuthorize("hasRole('ADMIN')")

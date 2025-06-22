@@ -16,7 +16,6 @@ public interface NganhMapper {
 
     Nganh toNganh(NganhCreationRequest request);
 
-    @Mapping(source = "boMon", target = "boMon")
     NganhResponse toNganhResponse(Nganh Nganh);
 
     List<NganhResponse> toNganhResponseList(List<Nganh> NganhList);

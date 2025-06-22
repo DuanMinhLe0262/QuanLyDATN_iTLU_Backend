@@ -15,8 +15,6 @@ public interface SinhVienMapper {
 
     SinhVien toSinhVien(SinhVienCreationRequest request);
 
-    @Mapping(source = "lop", target = "lop" )
-    @Mapping(source = "user", target = "user" )
     SinhVienResponse toSinhVienResponse(SinhVien sinhvien);
 
     List<SinhVienResponse> toSinhVienResponseList(List<SinhVien> sinhVienList);

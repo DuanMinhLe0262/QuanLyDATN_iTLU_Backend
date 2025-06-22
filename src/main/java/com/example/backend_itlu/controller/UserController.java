@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.extern.slf4j.Slf4j;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -45,11 +46,14 @@ public class UserController {
     }
 
     @GetMapping("/myInfo")
-    ApiResponse<UserResponse> getMyInfo() {
-        return ApiResponse.<UserResponse>builder()
-                .result(userService.getMyInfo())
-                .build();
+    public ResponseEntity<?> getMyInfo() {
+        return ResponseEntity.ok(
+                ApiResponse.builder()
+                        .result(userService.getMyInfo())
+                        .build()
+        );
     }
+
 
     @GetMapping("/{userId}")
     ApiResponse<UserResponse> getUser(@PathVariable("userId") String userId) {
