@@ -46,7 +46,7 @@ public class SinhVienCreationRequest {
 
     String userId;
 
-    @NotNull
     String lopId;
+    String dotId;
 }
 

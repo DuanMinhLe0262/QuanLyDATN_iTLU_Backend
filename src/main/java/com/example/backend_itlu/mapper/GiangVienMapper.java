@@ -4,6 +4,7 @@ import com.example.backend_itlu.dto.request.GiangVienCreationRequest;
 import com.example.backend_itlu.dto.request.GiangVienUpdateRequest;
 import com.example.backend_itlu.dto.response.GiangVienResponse;
 import com.example.backend_itlu.entity.GiangVien;
+import com.example.backend_itlu.entity.User;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
@@ -20,4 +21,5 @@ public interface GiangVienMapper {
     List<GiangVienResponse> toGiangVienResponseList(List<GiangVien> giangVienList);
 
     void updateGiangVienFromRequest(@MappingTarget GiangVien giangVien, GiangVienUpdateRequest request);
+    GiangVien giangVienIdToGiangVien(String giangVienId);
 }

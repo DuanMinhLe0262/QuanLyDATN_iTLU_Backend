@@ -6,6 +6,9 @@ import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -43,4 +46,11 @@ public class SinhVien {
     @ManyToOne
     @JoinColumn(name = "lop_id")
     Lop lop;
+
+    @ManyToOne
+    @JoinColumn(name = "dot_id")
+    DotDoAn dotDoAn;
+
+    @OneToMany(mappedBy = "sinhVien")
+    Set<SinhVienHuongDan> listGVHD = new HashSet<>();
 }

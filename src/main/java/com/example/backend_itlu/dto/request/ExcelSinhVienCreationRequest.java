@@ -1,7 +1,6 @@
 package com.example.backend_itlu.dto.request;
 
 import com.example.backend_itlu.enums.GioiTinh;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
@@ -15,7 +14,10 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class SinhVienUpdateRequest {
+public class ExcelSinhVienCreationRequest {
+
+    @NotBlank
+    String maSinhVien;
 
     @NotBlank
     String hoDem;
@@ -34,10 +36,13 @@ public class SinhVienUpdateRequest {
     @Pattern(regexp = "^(\\+84|0)(3|5|7|8|9)[0-9]{8}$", message = "Số điện thoại không hợp lệ")
     String soDienThoai;
 
+    String email;
+
     String avatarUrl;
 
-    @NotNull
-    String lopId;
-    String dotId;
+    String userId;
+
+    String tenLop;
+    String tenDot;
 }
 

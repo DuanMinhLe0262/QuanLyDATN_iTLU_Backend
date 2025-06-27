@@ -1,6 +1,7 @@
 package com.example.backend_itlu.controller;
 
 import com.example.backend_itlu.dto.request.*;
+import com.example.backend_itlu.dto.response.ImportResult;
 import com.example.backend_itlu.dto.response.SinhVienResponse;
 import com.example.backend_itlu.dto.response.UserResponse;
 import com.example.backend_itlu.service.SinhVienService;
@@ -12,6 +13,7 @@ import lombok.experimental.FieldDefaults;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
 
@@ -27,6 +29,14 @@ public class SinhVienController {
     public ApiResponse<SinhVienResponse> createSinhVien(@RequestBody @Valid SinhVienCreationRequest request) {
         return ApiResponse.<SinhVienResponse>builder()
                 .result(sinhVienService.createSinhVien(request))
+                .build();
+    }
+
+    @PostMapping("/importSinhVien")
+    public ApiResponse<ImportResult> importSinhVien(@RequestParam("file") MultipartFile file) {
+        ImportResult result = sinhVienService.importFromExcel(file);
+        return ApiResponse.<ImportResult>builder()
+                .result(result)
                 .build();
     }
 

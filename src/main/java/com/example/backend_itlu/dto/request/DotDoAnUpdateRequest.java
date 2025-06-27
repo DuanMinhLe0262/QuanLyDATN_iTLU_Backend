@@ -1,6 +1,6 @@
 package com.example.backend_itlu.dto.request;
 
-import com.example.backend_itlu.enums.TrangThaiDotDoAn;
+import com.example.backend_itlu.enums.Dot;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
@@ -14,9 +14,8 @@ import java.time.LocalDate;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class DotDoAnUpdateRequest {
 
-    String tenDot;
+    Dot tenDot;
     String namHoc;
     LocalDate thoiGianBatDau;
     LocalDate thoiGianKetThuc;
-    TrangThaiDotDoAn trangThaiDot;
 }

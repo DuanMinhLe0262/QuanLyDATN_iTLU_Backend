@@ -26,9 +26,6 @@ public class DotDoAnService {
     DotDoAnMapper dotDoAnMapper;
 
     public DotDoAnResponse createDotDoAn(DotDoAnCreationRequest request) {
-//        if (dotDoAnRepo.existsByTenDotDoAn(request.getTenDotDoAn())) {
-//            throw new AppException(ErrorCode.ENTITY_ALREADY_EXISTS);
-//        }
 
         DotDoAn dotDoAn = dotDoAnMapper.toDotDoAn(request);
         return dotDoAnMapper.toDotDoAnResponse(dotDoAnRepo.save(dotDoAn));
@@ -53,7 +50,7 @@ public class DotDoAnService {
 
 
     public List<DotDoAnResponse> getAllDotDoAn() {
-        List<DotDoAn> dotDoAnList = dotDoAnRepo.findAllByOrderByThoiGianTaoDesc();
+        List<DotDoAn> dotDoAnList = dotDoAnRepo.findAll();
         return dotDoAnMapper.toDotDoAnResponseList(dotDoAnList);
     }
 

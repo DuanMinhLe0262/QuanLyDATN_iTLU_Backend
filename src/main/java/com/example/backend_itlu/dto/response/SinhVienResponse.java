@@ -40,5 +40,5 @@ public class SinhVienResponse {
     UserResponse user;
 
     LopResponse lop;
-
+    DotDoAnResponse dot;
 }

@@ -5,6 +5,8 @@ public enum ErrorCode {
     PASSWORD_INVALID(1003, "Password must be at least 6 characters"),
     USER_NOT_FOUND(1004, "User not found"),
 
+    DOT_DO_AN_NOT_FOUND(1004, "Khong tim thay dot do an"),
+
     ENTITY_NOT_FOUND(1005, "Entity not found"),
     ENTITY_ALREADY_EXISTS(1006, "Entity already exists"),
     INVALID_INPUT(1007, "Invalid input data"),

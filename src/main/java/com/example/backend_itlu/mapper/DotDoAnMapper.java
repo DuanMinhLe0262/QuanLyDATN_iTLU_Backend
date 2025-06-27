@@ -20,4 +20,6 @@ public interface DotDoAnMapper {
     List<DotDoAnResponse> toDotDoAnResponseList(List<DotDoAn> dotDoAnList);
 
     void updateDotDoAnFromRequest(@MappingTarget DotDoAn dotDoAn, DotDoAnUpdateRequest request);
+
+    DotDoAn dotIdtoDotDoAn(String dotId);
 }

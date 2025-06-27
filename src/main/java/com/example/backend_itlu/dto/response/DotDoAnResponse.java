@@ -1,11 +1,11 @@
 package com.example.backend_itlu.dto.response;
 
-import com.example.backend_itlu.enums.TrangThaiDotDoAn;
+import com.example.backend_itlu.enums.Dot;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 
 @Data
@@ -16,10 +16,12 @@ import java.time.LocalDateTime;
 public class DotDoAnResponse {
 
     String id;
-    String tenDot;
+    Dot tenDot;
     String namHoc;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     LocalDate thoiGianBatDau;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     LocalDate thoiGianKetThuc;
-    TrangThaiDotDoAn trangThaiDot;
-    LocalDateTime thoiGianTao;
 }

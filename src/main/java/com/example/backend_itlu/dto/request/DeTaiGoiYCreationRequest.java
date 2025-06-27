@@ -1,6 +1,5 @@
 package com.example.backend_itlu.dto.request;
 
-import com.example.backend_itlu.entity.BoMon;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;

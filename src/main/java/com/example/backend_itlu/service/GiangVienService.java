@@ -42,7 +42,7 @@ public class GiangVienService {
         User user = User.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode("Tlu@12345"))
-                .roles(Set.of(Role.LECTURE))
+                .roles(Set.of(Role.GIANGVIEN))
                 .build();
 
         user = userRepo.save(user);

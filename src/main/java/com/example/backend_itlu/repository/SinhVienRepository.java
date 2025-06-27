@@ -12,4 +12,5 @@ public interface SinhVienRepository extends JpaRepository<SinhVien, String> {
 
     boolean existsByMaSinhVien(String maSinhVien);
     Optional<SinhVien> findByUserId(String userId);
+    Optional<SinhVien> findByMaSinhVien(String maSinhVien);
 }

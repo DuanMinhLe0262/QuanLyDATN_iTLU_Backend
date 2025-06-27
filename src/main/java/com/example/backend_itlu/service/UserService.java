@@ -79,14 +79,14 @@ public class UserService {
         User user = userRepo.findByEmail(email)
                 .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
-        if (user.getRoles().contains(Role.STUDENT)) {
+        if (user.getRoles().contains(Role.SINHVIEN)) {
             SinhVien sv = sinhVienRepo.findByUserId(user.getId())
                     .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 
             return ResponseEntity.ok(sinhVienMapper.toSinhVienResponse(sv));
         }
 
-        if (user.getRoles().contains(Role.LECTURE)) {
+        if (user.getRoles().contains(Role.GIANGVIEN)) {
             GiangVien gv = giangVienRepo.findByUserId(user.getId())
                     .orElseThrow(() -> new AppException(ErrorCode.USER_NOT_FOUND));
 

@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface GiangVienRepository extends JpaRepository<GiangVien, String> {
     Optional<GiangVien> findByUserId(String userId);
+    Optional<GiangVien> findByMaGiangVien(String maGiangVien);
 
 }

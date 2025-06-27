@@ -7,6 +7,7 @@ import com.example.backend_itlu.dto.response.AuthenticationResponse;
 import com.example.backend_itlu.dto.response.IntrospectResponse;
 import com.example.backend_itlu.service.AuthenticationService;
 import com.nimbusds.jose.JOSEException;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.FieldDefaults;
@@ -19,6 +20,7 @@ import org.springframework.security.oauth2.jwt.Jwt;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.time.Duration;
 import java.util.List;
 import java.util.Map;
 
@@ -41,7 +43,7 @@ public class AuthenticationController {
                 .httpOnly(true)
                 .secure(false)
                 .path("/")
-                .maxAge(60 * 60 * 1000)
+                .maxAge(Duration.ofHours(1))
                 .sameSite("Lax")
                 .build();
 
@@ -52,7 +54,6 @@ public class AuthenticationController {
                         .build());
     }
 
-//    @PreAuthorize("hasAnyRole('ADMIN', 'LECTURE')")
     @GetMapping("/token/me")
     public Map<String, Object> getCurrentUser(@AuthenticationPrincipal Jwt jwt) {
         List<String> roles = List.of(jwt.getClaimAsString("scope").split(" "));
@@ -60,6 +61,22 @@ public class AuthenticationController {
                 "email", jwt.getSubject(),
                 "roles", roles
         );
+    }
+
+    @PostMapping("/logout")
+    public ResponseEntity<?> logout(HttpServletResponse response) {
+
+        ResponseCookie deleteCookie = ResponseCookie.from("accessToken", "")
+                .httpOnly(true)
+                .secure(false)
+                .sameSite("Lax")
+                .path("/")
+                .maxAge(0)
+                .build();
+
+        response.setHeader(HttpHeaders.SET_COOKIE, deleteCookie.toString());
+
+        return ResponseEntity.ok("Logged out successfully");
     }
 
     @PostMapping("/introspect")
